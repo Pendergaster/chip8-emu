@@ -112,8 +112,10 @@ chip8_cycle() {
 
     static int updated = 0;
     u16 opcode = memory[pc] << 8 | memory[pc + 1];
+#if 0 // For debugging
     printf ("Executing %04X at %04X , I:%02X SP:%02X UPDATE:%d V0: %d\n",
            opcode, pc, IReqister, stackpointer, updated, (int)VRegisters[0]);
+#endif
 
     if(++updated > 100 && 0) exit(1);
     //printf ("next opcode: 0x%X\n", opcode);
@@ -716,56 +718,12 @@ renderer_init() {
 
     //orthomat(&projection, 0.5f, (float)CHIP8_WIDTH + 0.5f, (float)CHIP8_HEIGHT + 0.5f, 0.5f, 0.1f, 100.f);
     //orthomat(&projection, 0, (float)CHIP8_WIDTH, 0, (float)CHIP8_HEIGHT, 0.1f, 100.f);
-    orthomat(&projection, 0.5f,
-            (float)CHIP8_WIDTH + 0.5f - 1.f,
-            (float)CHIP8_HEIGHT + 0.5f - 1.f,
-            0.5f, 0.1f, 100.f);
 
-#if 0
-    mat4 transform;
-
-    create_translation_mat_inside(&transform, (vec3){0, 0, 0});
-
-    vec4 pos = mat4_mult_vec4(&transform, (vec4){ 0.5 , 0.5 ,0 , 1});
-
-    pos = mat4_mult_vec4(&transform, pos);
-
-    printf("rerere\n");
-
-    pos = mat4_mult_vec4(&projection, pos);
-
-    printf("rerere\n");
-
-
-    //identify_mat4(&projection);
-
-    // from left top corner
-
-    //create_scaling_mat4(&projection, (vec3) { 1.f/ (float)CHIP8_WIDTH, 1.f/ (float)CHIP8_HEIGHT, 0});
-    //translate_mat4(&projection, (vec3) {-1, -1, 0});
-
-    vec4 pos = mat4_mult_vec4(&projection, (vec4){0,0,0,1});
-
-    printf("rerere\n");
-
-    pos = mat4_mult_vec4(&projection, (vec4){1,1,0,1});
-
-    printf("rerere\n");
-
-    pos = mat4_mult_vec4(&projection, (vec4){CHIP8_WIDTH + 0.5, CHIP8_HEIGHT + 0.5,0,1});
-
-    printf("rerere\n");
-
-    pos = mat4_mult_vec4(&projection, (vec4){ 0.5f , 0.5f ,0,1});
-
-    printf("rerere\n");
-
-#endif
-#if 0
-    glm::mat4 trans = glm::mat4(1.0f);
-    trans = glm::rotate(trans, glm::radians(90.0f), glm::vec3(0.0, 0.0, 1.0));
-    trans = glm::scale(trans, glm::vec3(0.5, 0.5, 0.5));
-#endif
+    orthomat(&projection, 0.5f, // left
+            (float)CHIP8_WIDTH + 0.5f , // right
+            (float)CHIP8_HEIGHT  + 0.5f  - 1.f, // bottom
+            /* 0.5f */ -0.5f,
+            0.1f, 100.f);
 }
 
 
@@ -848,7 +806,7 @@ main(int argc, char** argv) {
         chip8_load_game(argv[1]);
     }
     double processorHZ = 1.0 / 100.0;
-    double timerHZ = 1.0 / 50.0;
+    double timerHZ = 1.0 / 100.0;
     double processorLastTime = (double)clock() / CLOCKS_PER_SEC;
     double timerLastTime = processorLastTime;
     while (running) {
@@ -862,8 +820,6 @@ main(int argc, char** argv) {
 
             if(draw) {
                 draw = 0;
-                //printf("drawing!\n");
-                //exit(1);
                 chip8_draw(window);
             }
 
