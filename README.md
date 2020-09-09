@@ -14,4 +14,4 @@ Invaders game
 
 Bliz game
 
-![image2](chip8Bliz.png
+![image2](chip8Bliz.png)
