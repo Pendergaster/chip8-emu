@@ -5,10 +5,10 @@ Can be build for linux, but there is not many dependencies so windows build shou
 # images
 
 Pong game
-!(image1)[chip8.png]
+![image1](chip8.png)
 
 Bliz game
-!(image2)[chipBliz.png]
+![image2](chipBliz.png)
 
 Invaders game
-!(image3)[chipinvaders.png]
+![image3](chipinvaders.png)
