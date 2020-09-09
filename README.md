@@ -1,6 +1,6 @@
 # chip8-emu
 bare bones implementation of chip8 emulator using OpenGL rendering with [SDL2](https://www.libsdl.org/) window.
-Can be build for linux, but there is not many dependencies so windows build should be fairly straigh forward
+Can be build for linux/unix, but there is not many dependencies so windows build should be fairly straigh forward
 
 # images
 
